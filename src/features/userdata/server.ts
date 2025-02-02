@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
 import {
-  repoPropmptFn,
+  PropmptFn,
 } from "./helpers";
 import {
   GITHUB_CLID,
@@ -12,7 +12,6 @@ import {
 } from "@/config";
 import axios from "axios";
 import { Redis } from "@upstash/redis";
-import { repoBulletPromptSchema } from "./schema";
 import { authMiddleware } from "../auth/server";
 
 const app = new Hono()
@@ -98,14 +97,22 @@ const app = new Hono()
     }
   )
   .post(
-    "/prompt/repo",
-    zValidator("json", repoBulletPromptSchema),
-    async (c) => {
-      const repo_data = c.req.valid("json");
-      const data = await repoPropmptFn({ repo_data });
-      const text = data.candidates[0].content.parts[0].text.split("\n").filter(item=> item.length !== 0)
-      return c.json(text);
+    "/prompt", 
+    // authMiddleware,
+    zValidator("json", z.array(z.object({text : z.string()}))),
+    async(c) => {
+      const data = c.req.valid('json')
+      const type = c.req.query('type')
+      console.log(type)
+      if (type === "projects") {
+        const prompt = "Above are my project generate me a resume bullet point for each one of them in 50 words with metrics on a separate line. Fake metrics if not found. Don't add extra text decorations"
+        const res = await PropmptFn({ prompt_data : data, prompt_text: prompt });
+        const text = res.candidates[0].content.parts[0].text.split("\n").filter(item => item.length !== 0)
+        return c.json(text)
+      } else {
+        return c.json({error : "Invalid Type"}, 401)
+      }
     }
-  );
+  )
 
 export default app;

@@ -3,11 +3,13 @@ import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 
 async function SignInPage() {
-  const session = await auth()
+  const session = await auth();
   if (session) {
-    redirect('/')
+    redirect("/");
   }
-  return <SignInCard />;
+  return (
+      <SignInCard />
+  );
 }
 
-export default SignInPage
+export default SignInPage;

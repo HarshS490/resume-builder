@@ -1,9 +1,8 @@
 import { GEMINI_API_KEY, REDIS_TOKEN, REDIS_URL } from "@/config";
 import { Redis } from "@upstash/redis";
 import axios from "axios";
-import { geminiPromptResponseType } from "./types";
-import { z } from "zod";
-import { repoBulletPromptSchema } from "./schema";
+import { geminiPromptResponseType, promptTemplateType } from "./types";
+// import { z } from "zod";
 
 export const getGithubTokenFromDB = async (user_id: string) => {
   const redis = new Redis({
@@ -35,32 +34,34 @@ export const getRepositories = async (
   return res.data;
 };
 
-type repoPromptFnProps = {
-  repo_data: z.infer<typeof repoBulletPromptSchema>;
+type PromptFnProps = {
+  prompt_data: promptTemplateType[]
+  prompt_text: string;
 };
-export const repoPropmptFn = async ({ repo_data }: repoPromptFnProps) => {
+export const PropmptFn = async ({
+  prompt_data,
+  prompt_text,
+}: PromptFnProps) => {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent?key=${GEMINI_API_KEY}`;
   const body = {
     contents: [
       {
         parts: [
-          ...repo_data.map((repo) => {
-            return {
-              text : repo.title
-            }
-          }),
+          ...prompt_data,
           {
-            text: "Above are my project generate me a resume bullet point for each one of them in 50 words with metrics on a separate line. Fake metrics if not found.",
+            text: prompt_text,
           },
         ],
       },
     ],
   };
-  const res = await axios.post(url, body, {headers: {"Accept" : "application/json"}})
+  const res = await axios.post(url, body, {
+    headers: { Accept: "application/json" },
+  });
   if (res.status !== 200) {
-    console.error("Failed to generate response from Gemini")
-    throw new Error("Failed to generate response from Gemini")
+    console.error("Failed to generate response from Gemini");
+    throw new Error("Failed to generate response from Gemini");
   }
 
-  return res.data as geminiPromptResponseType
+  return res.data as geminiPromptResponseType;
 };

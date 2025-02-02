@@ -28,3 +28,10 @@ export type geminiPromptResponseType = {
   };
   modelVersion: string;
 };
+
+
+export type promptCategories = "projects" 
+export type promptTemplateType = {
+  text : string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+} & Record<any,any>
