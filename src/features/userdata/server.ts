@@ -2,8 +2,6 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
 import {
-  getGithubTokenFromDB,
-  getRepositories,
   repoPropmptFn,
 } from "./helpers";
 import {
@@ -14,27 +12,48 @@ import {
 } from "@/config";
 import axios from "axios";
 import { Redis } from "@upstash/redis";
-import { repoBulletPromptSchema } from "../schema";
+import { repoBulletPromptSchema } from "./schema";
+import { authMiddleware } from "../auth/server";
 
 const app = new Hono()
   .get(
     "/repos",
+    authMiddleware,
     zValidator(
       "query",
       z.object({
-        user_id: z.string(),
         github_user_id: z.string(),
       })
     ),
     async (c) => {
-      const { user_id, github_user_id } = c.req.valid("query");
+      const user_id = c.get('session').user?.id as string
+      const { github_user_id } = c.req.valid("query");
       try {
-        const access_token = await getGithubTokenFromDB(user_id);
-        const repository_data = await getRepositories(
-          access_token,
-          github_user_id
-        );
-        return c.json(repository_data);
+        const redis = new Redis({
+          url: REDIS_URL,
+          token: REDIS_TOKEN,
+        });
+        const access_token = (await redis.get(user_id)) as string;
+        if (access_token) {
+          const url = `https://api.github.com/user/repos`;
+          const res = await axios.get(url, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${access_token}`,
+            },
+          });
+          if (res.status !== 200) {
+            throw new Error("Unable to get Repositories");
+          }
+          return c.json({private: true, data : res.data});
+        } else {
+          const url = `https://api.github.com/users/${github_user_id}/repos`;
+          const res = await axios.get(url, {headers: {"Accept" : "application/json"}})
+          if (res.status !== 200) {
+            throw new Error("Unable to fetch from public api")
+          }
+          return c.json({private:false, data : res.data})
+        }
       } catch (error) {
         return c.json(
           {
@@ -48,9 +67,11 @@ const app = new Hono()
   )
   .post(
     "/register/github",
-    zValidator("query", z.object({ code: z.string(), user_id: z.string() })),
+    authMiddleware,
+    zValidator("query", z.object({ code: z.string()})),
     async (c) => {
-      const { code, user_id } = c.req.valid("query");
+      const user_id = c.get('session').user?.id as string
+      const { code } = c.req.valid("query");
       const req_url = `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLID}&client_secret=${GITHUB_CLID_SECRET}&code=${code}`;
       const data = (
         await axios.post(
@@ -65,8 +86,7 @@ const app = new Hono()
       ).data;
 
       if (!data.access_token) {
-        console.debug(data);
-        return c.json({ error: "Failed to genereate user token" });
+        return c.json({ error: "Failed to genereate user token" }, 401);
       } else {
         const redis = new Redis({
           url: REDIS_URL,

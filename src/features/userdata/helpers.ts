@@ -1,9 +1,9 @@
 import { GEMINI_API_KEY, REDIS_TOKEN, REDIS_URL } from "@/config";
 import { Redis } from "@upstash/redis";
 import axios from "axios";
-import { geminiPromptResponseType } from "../types";
+import { geminiPromptResponseType } from "./types";
 import { z } from "zod";
-import { repoBulletPromptSchema } from "../schema";
+import { repoBulletPromptSchema } from "./schema";
 
 export const getGithubTokenFromDB = async (user_id: string) => {
   const redis = new Redis({

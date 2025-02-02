@@ -1,24 +1,9 @@
-import userdata from "@/features/userdata/server/route";
-import { auth } from "@/lib/auth/auth";
-import { type Context, Hono, type Next } from "hono";
-import { createMiddleware } from "hono/factory";
+import { authMiddleware } from "@/features/auth/server";
+import userdata from "@/features/userdata/server";
+import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import type { Session } from "next-auth";
+
 const app = new Hono().basePath("/api");
-
-const authMiddleware = createMiddleware<{
-  Variables: {
-    session: Session;
-  };
-}>(async (c: Context, next: Next) => {
-  const session = await auth();
-  if (!session) {
-    return c.text("Unauthorized", 401);
-  }
-  c.set("session", session);
-  await next();
-});
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes = app
   .get("/hello", (c) => {
