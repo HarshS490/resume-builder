@@ -11,6 +11,8 @@ import {
   useSearchParams,
 } from "next/navigation";
 
+type tempSchema = {name : string}
+
 function RepositoryView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -49,7 +51,7 @@ function RepositoryView() {
       <Button onClick={onClickHandler}>Click to connect to Github to view private repositories</Button>
       {/* <div className="">{JSON.stringify(data ?? {})}</div> */}
       <div>{data?.private ? "true" : "false"}</div>
-      <ul className="flex flex-col">{data?.data.map((item) => {
+      <ul className="flex flex-col">{(data?.data as tempSchema[]).map((item) => {
         return <li key={item.name}>{item.name}</li>
       })}</ul>
     </div>
