@@ -1,19 +1,33 @@
-"use client"
+"use client";
 
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
-type LogoutButtonProps = ButtonProps
+const LogoutButton = ({
+  children,
+  asChild = false,
+  className,
+}: {
+  children: React.ReactNode;
+  asChild?: boolean;
+  className?: string;
+}) => {
+  return asChild ? (
+    <div className={className}>{children}</div>
+  ) : (
+    <Button
+      className={cn("flex items-center gap-1.5", className)}
+      variant="destructive"
+      onClick={async () => {
+        await signOut();
+      }}
+    >
+      <LogOut />
+      {children}
+    </Button>
+  );
+};
 
-function LogoutButton({...props}:LogoutButtonProps) {
-  const router = useRouter()
-  const onClickHandler = async () => {
-    await signOut({redirect: false})
-    router.refresh()
-  }
-  
-  return <Button {...props} onClick={onClickHandler}>Sign Out</Button>;
-}
-
-export { LogoutButton };
+export default LogoutButton;

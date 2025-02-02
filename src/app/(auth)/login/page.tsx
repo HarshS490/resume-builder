@@ -1,13 +1,10 @@
-import { auth } from "@/lib/auth/auth";
-import LoginButton from "./login-button";
-import LogoutButton from "./logout-button";
+import SignInCard from "@/features/auth/components/sign-in-card";
 
+// TODO: If already logged in then go to /dashboard
 const Page = async () => {
-  const session = await auth();
   return (
-    <div>
-      <div>{session?.user?.email ?? "Not logged in"}</div>
-      {session ? <LogoutButton /> : <LoginButton />}
+    <div className="flex items-center justify-center h-screen bg-[#f1f6f5]">
+      <SignInCard />
     </div>
   );
 };
