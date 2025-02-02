@@ -9,16 +9,22 @@ const LoginButton = ({
   children,
   className,
   provider,
+  to,
 }: {
   children: React.ReactNode;
   className?: string;
   provider: "github" | "google";
+  to?: string | undefined;
 }) => {
   const logo = AuthProviderLogos[provider];
   return (
     <Button
       className={cn("inline-flex items-center gap-1.5", className)}
-      onClick={async () => await signIn(provider)}
+      onClick={async () =>
+        await signIn(provider, {
+          redirectTo: to ?? "/dashboard",
+        })
+      }
     >
       {logo && <span>{logo}</span>}
       <span>{children}</span>

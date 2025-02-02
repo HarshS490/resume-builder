@@ -2,7 +2,7 @@ import { AuthProviderStrings } from "@/lib/auth/providers";
 import LoginButton from "./login-button";
 import Link from "next/link";
 
-const SignInCard = () => {
+const SignInCard = ({ from }: { from?: string | undefined }) => {
   return (
     <main className="w-[80%] h-[80%] bg-white flex">
       <div className="flex-1 flex flex-col px-20 py-16 text-center">
@@ -14,7 +14,7 @@ const SignInCard = () => {
         </p>
         <div className="h-full w-full flex flex-col gap-1.5 justify-center max-w-[60%] mx-auto">
           {AuthProviderStrings.map((provider) => (
-            <LoginButton key={provider} provider={provider}>
+            <LoginButton key={provider} provider={provider} to={from}>
               Login with {provider}
             </LoginButton>
           ))}

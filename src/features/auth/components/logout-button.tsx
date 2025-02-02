@@ -7,16 +7,12 @@ import { signOut } from "next-auth/react";
 
 const LogoutButton = ({
   children,
-  asChild = false,
   className,
 }: {
   children: React.ReactNode;
-  asChild?: boolean;
   className?: string;
 }) => {
-  return asChild ? (
-    <div className={className}>{children}</div>
-  ) : (
+  return (
     <Button
       className={cn("flex items-center gap-1.5", className)}
       variant="destructive"
