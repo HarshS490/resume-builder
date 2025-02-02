@@ -1,16 +1,9 @@
-import { LogoutButton } from "@/features/auth/components/logout-button";
-import { auth } from "@/lib/auth/auth";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function Homepage() {
-  const session = await auth()
-  if (!session) {
-    redirect('/sign-in')
-  }
-  return <div>
-    Authenticated users should see this
-    {JSON.stringify(session)}
-    <LogoutButton />
-    
-  </div>;
+  return (
+    <div>
+      <Link href="/login">Login</Link>
+    </div>
+  );
 }

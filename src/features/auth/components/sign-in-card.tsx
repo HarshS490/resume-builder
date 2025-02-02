@@ -1,67 +1,44 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
-import { useState } from "react";
+import { AuthProviderStrings } from "@/lib/auth/providers";
+import LoginButton from "./login-button";
 import Link from "next/link";
-import { toast } from "sonner";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
-function SignInCard() {
-  const [disabled, setDisabled] = useState(false);
-  const router = useRouter()
-
-  const loginWithGithubHandler = async () => {
-    setDisabled(true)
-    try {
-      await signIn('github',{redirect:false})
-      toast.success('Signed in successfully')
-    } catch {
-      toast.error("Failed to sign in ")
-      setDisabled(false)
-    }
-    router.refresh()
-  }
-
+const SignInCard = ({ from }: { from?: string | undefined }) => {
   return (
-    <Card className="w-full h-full md:w-[487px] border-none shadow-none">
-      <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">Welcome Back!</CardTitle>
-      </CardHeader>
-      <CardContent className="p-7 flex flex-col gap-y-4">
-        <Button
-          variant={"secondary"}
-          size={"lg"}
-          className="w-full"
-          disabled={disabled}
-          onClick={()=>{}}
-        >
-          <FcGoogle className="mr-2 size-5" />
-          Login with Google
-        </Button>
-        <Button
-          variant={"secondary"}
-          size={"lg"}
-          className="w-full"
-          onClick={loginWithGithubHandler}
-          disabled={disabled}
-        >
-          <FaGithub className="mr-2 size-5"></FaGithub>
-          Login with Github
-        </Button>
-      </CardContent>
-      <div className="p-7  flex items-center justify-center">
-        <p>
-          Don&apos;t have an account?
-          <Link href="/sign-up" className="text-blue-700">
-            &nbsp;Sign Up
-          </Link>
+    <main className="w-[80%] h-[80%] bg-white flex">
+      <div className="flex-1 flex flex-col px-20 py-16 text-center">
+        <h1 className="text-5xl tracking-tighter font-thin text-black/85">
+          Resume Builder
+        </h1>
+        <p className="text-muted-foreground mt-2">
+          Sign in for your personalized resume
         </p>
+        <div className="h-full w-full flex flex-col gap-1.5 justify-center max-w-[60%] mx-auto">
+          {AuthProviderStrings.map((provider) => (
+            <LoginButton key={provider} provider={provider} to={from}>
+              Login with {provider}
+            </LoginButton>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">
+          By logging in, you agree to our{" "}
+          <Link
+            className="text-blue-500 underline hover:no-underline"
+            href="/toc"
+          >
+            Terms and Conditions
+          </Link>{" "}
+          and{" "}
+          <Link
+            className="text-blue-500 underline hover:no-underline"
+            href="/privacy"
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
-    </Card>
+      <div className="flex-1 bg-zinc-400"></div>
+    </main>
   );
-}
+};
 
-export { SignInCard };
+export default SignInCard;
