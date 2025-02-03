@@ -1,9 +1,9 @@
-import Link from "next/link";
+import LandingNavbar from "@/components/landing-navbar";
 
 export default async function Homepage() {
   return (
-    <div>
-      <Link href="/login">Login</Link>
-    </div>
+    <main>
+      <LandingNavbar />
+    </main>
   );
 }

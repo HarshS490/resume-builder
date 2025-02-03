@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { AuthProviderLogos } from "@/lib/auth/providers";
-import { cn } from "@/lib/utils";
 import { signIn } from "next-auth/react";
 
 const LoginButton = ({
@@ -19,7 +18,7 @@ const LoginButton = ({
   const logo = AuthProviderLogos[provider];
   return (
     <Button
-      className={cn("inline-flex items-center gap-1.5", className)}
+      className={className}
       onClick={async () =>
         await signIn(provider, {
           redirectTo: to ?? "/dashboard",
