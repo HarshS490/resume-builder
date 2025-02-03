@@ -1,13 +1,18 @@
-"use client";
+"use server";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { auth } from "@/lib/auth/auth";
+import { redirect } from "next/navigation";
 
-const LoginRedirect = ({ children }: { children?: React.ReactNode }) => {
-  const { status } = useSession();
-  const router = useRouter();
-  if (status === "authenticated") {
-    router.replace("/dashboard");
+const LoginRedirect = async ({
+  children,
+  to = "/dashboard",
+}: {
+  children?: React.ReactNode;
+  to?: string;
+}) => {
+  const user = await auth();
+  if (user) {
+    redirect(to);
   }
   return children;
 };

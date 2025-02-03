@@ -1,16 +1,15 @@
-"use client";
+"use server";
 
-import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { auth } from "@/lib/auth/auth";
+import { redirect } from "next/navigation";
 
-const EnsureLoggedIn = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { status } = useSession();
-  if (status === "unauthenticated") {
-    router.push(`/login?from=${encodeURIComponent(pathname)}`);
+const EnsureLoggedIn = async ({ children }: { children: React.ReactNode }) => {
+  // server side check to ensure that user is logged in
+  const user = await auth();
+  if (!user) {
+    redirect("/login");
   }
-  return <></>;
+  return children;
 };
 
 export default EnsureLoggedIn;

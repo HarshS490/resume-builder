@@ -1,16 +1,11 @@
-import EnsureLoggedIn from "@/features/auth/components/ensure-logged-in";
+"use server";
 
-// TODO: Is it the best way to do this?
+import EnsureLoggedIn from "@/features/auth/components/ensure-logged-in";
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <>
-      <EnsureLoggedIn />
-      {children}
-    </>
-  );
+  return <EnsureLoggedIn>{children}</EnsureLoggedIn>;
 }
