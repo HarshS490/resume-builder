@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { useGetRepositories } from "@/features/userdata/api/use-get-repositories";
 import { useRegisterGithub } from "@/features/userdata/api/use-register-github";
 import { columns } from "@/features/userdata/components/columns";
@@ -21,6 +21,8 @@ function RepositoryView() {
   const { mutate, isPending } = useRegisterGithub();
   const queryClient = useQueryClient();
 
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onClickHandler = async () => {
     const base_url = `https://github.com/login/oauth/authorize`;
     const path = `?client_id=${process.env
@@ -52,10 +54,10 @@ function RepositoryView() {
   }
   console.log(data);
   return (
-    <div>
-      <Button onClick={onClickHandler}>
+    <div className="">
+      {/* <Button onClick={onClickHandler}>
         Click to connect to Github to view private repositories
-      </Button>
+      </Button> */}
       <DataTable columns={columns} data={data?.data ?? []} />
     </div>
   );

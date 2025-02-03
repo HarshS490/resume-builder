@@ -1,6 +1,7 @@
 import { AuthProviderStrings } from "@/lib/auth/providers";
 import LoginButton from "./login-button";
 import Link from "next/link";
+import Image from "next/image";
 
 const SignInCard = ({ from }: { from?: string | undefined }) => {
   return (
@@ -12,6 +13,18 @@ const SignInCard = ({ from }: { from?: string | undefined }) => {
         <p className="text-muted-foreground text-sm md:text-base mt-2">
           Sign in for your personalized resume
         </p>
+        {/* <div className="block md:hidden relative h-full w-full min-w-0 max-w-[60%] self-center">
+          <Image
+            src="/login-page.jpg"
+            className="object-cover rounded-r-md"
+            alt=""
+            // width={1000}
+            // height={1000}
+            fill
+          />
+        </div> 
+         // Removing it for now
+        */}
         <div className="h-full w-full flex flex-col gap-2 md:gap-1.5 justify-center max-w-[60%] mx-auto">
           {AuthProviderStrings.map((provider) => (
             <LoginButton
@@ -42,9 +55,12 @@ const SignInCard = ({ from }: { from?: string | undefined }) => {
         </div>
       </section>
       <section className="hidden md:block flex-1">
-        <img
+        <Image
           src="/login-page.jpg"
           className="h-full w-full object-cover rounded-r-md"
+          alt=""
+          width={1000}
+          height={1000}
         />
       </section>
     </main>
