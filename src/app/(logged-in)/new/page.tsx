@@ -1,14 +1,13 @@
-import { Form } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
+import { ResumeForm } from "@/features/userdata/components/resume-form";
+import { auth } from "@/lib/auth/auth";
+import { redirect } from "next/navigation";
 
-const Page = () => {
-  const onSubmit = () => {};
-  const form = useForm({});
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}></form>
-    </Form>
-  );
+const Page = async () => {
+  const session = await auth()
+  if (!session) {
+    redirect('/login')
+  }
+  return <ResumeForm />
 };
 
 export default Page;
