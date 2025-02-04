@@ -1,3 +1,4 @@
+"use client"
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { WorkExperienceInput } from "./work-experience-input";
