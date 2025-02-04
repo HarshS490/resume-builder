@@ -52,12 +52,12 @@ function RepositoryView() {
       }
     );
   }
-  console.log(data);
   return (
     <div className="">
       {/* <Button onClick={onClickHandler}>
         Click to connect to Github to view private repositories
       </Button> */}
+      
       <DataTable columns={columns} data={data?.data ?? []} />
     </div>
   );
