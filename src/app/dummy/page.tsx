@@ -1,5 +1,11 @@
+import { EducationDetailsTable } from "@/features/userdata/components/education-details/education-details-table";
+
 const Page = () => {
-  return <div>Page</div>;
+  return (
+    <div>
+      <EducationDetailsTable />
+    </div>
+  );
 };
 
 export default Page;
