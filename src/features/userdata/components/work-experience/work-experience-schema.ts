@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const WorkAchievementsSchema = z
-  .array(z.string().max(100, "Achievement can be at most 100 characters"))
+  .array(z.string().max(20, "Achievement can be at most 20 characters"))
   .max(4, "Maximum 4 achievements are allowed");
 
 export const WorkExperienceDetailSchema = z.object({
