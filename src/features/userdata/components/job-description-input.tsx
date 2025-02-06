@@ -13,6 +13,7 @@ import {
   FormItem,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 import { UseFormReturn } from "react-hook-form";
 
 type JobDescriptionInputProps = {
@@ -35,7 +36,7 @@ export const JobDescriptionInput = ({ form }: JobDescriptionInputProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea {...field} placeholder="Enter job description..." className="resize-none max-h-96  min-h-[200px] h-full field-sizing-content" />
+                <Textarea {...field} placeholder="Enter job description..." className={cn("resize-none max-h-96  min-h-[200px] h-full field-sizing-content",field.value && "border-transparent hover:border-border focus-visible:border-border")} />
               </FormControl>
             </FormItem>
           )}
