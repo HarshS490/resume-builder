@@ -52,15 +52,29 @@ export type WorkExperience = z.infer<typeof WorkExperienceDetailSchema>;
 export type WorkAchievements = z.infer<typeof WorkAchievementsSchema>;
 
 export const achievementSchema = z.object({
-  value: z.string().min(20, {message: "Describe your achievement more"}).default(""),
+  value: z
+    .string()
+    .min(20, { message: "Describe your achievement more" })
+    .default(""),
 });
 
+export const extraActivitySchema = z.object({
+  value: z.string().min(20, { message: "Describe extra activity a bit more" }),
+});
+
+export const basicUserDetailSchema = z.object({
+  firstName: z.string().min(1),
+  middleName: z.string().default(""),
+  lastName: z.string().default(""),
+});
 export const resumeSchema = z.object({
   education_details: z.array(EducationDetailSchema),
   work_experience: z.array(WorkExperienceDetailSchema),
   projects: z.array(projectSchema),
   job_description: jobDescriptionSchema,
   achievements: z.array(achievementSchema),
+  extraactivity: z.array(extraActivitySchema),
+  name: basicUserDetailSchema,
 });
 
 export type resumeSchemaType = z.infer<typeof resumeSchema>;
