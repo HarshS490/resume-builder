@@ -39,6 +39,7 @@ export const ProjectsInput = ({ form }: ProjectsInputProps) => {
   });
 
   const onAddProject = async () => {
+    setCurrIndex(-1)
     await open();
   };
   const onSubmitProject = async (value: z.infer<typeof projectSchema>) => {
@@ -75,15 +76,21 @@ export const ProjectsInput = ({ form }: ProjectsInputProps) => {
       </CardHeader>
       <CardContent>
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 my-4">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              index={index}
-              onEdit={onEditProject}
-              onDelete={onDeleteProject}
-              {...project}
-            />
-          ))}
+          {projects.length > 0 ? (
+            projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                index={index}
+                onEdit={onEditProject}
+                onDelete={onDeleteProject}
+                {...project}
+              />
+            ))
+          ) : (
+            <div className="flex items-center justify-center text-xl text-muted-foreground border-border border-4 rounded-xl border-dashed h-[130px]">
+              No project details added
+            </div>
+          )}
         </div>
         <Button
           variant="default"
@@ -115,7 +122,8 @@ const ProjectCard = ({
   return (
     <div className="flex flex-col gap-4 p-4 border border-border rounded-md ">
       <div className="flex w-full gap-1">
-        <span className="font-bold">{project_title}</span>|
+        <span className="font-bold">{project_title}</span>
+        {project_links?.length > 0 && <span>|</span>}
         {project_links?.map((item, index) => (
           <React.Fragment key={index}>
             <Link

@@ -15,9 +15,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { UseFormReturn } from "react-hook-form";
+import { resumeSchemaType } from "../schemas";
 
 type JobDescriptionInputProps = {
-  form: UseFormReturn;
+  form: UseFormReturn<resumeSchemaType>;
 };
 
 export const JobDescriptionInput = ({ form }: JobDescriptionInputProps) => {

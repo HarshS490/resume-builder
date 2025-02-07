@@ -1,8 +1,8 @@
 "use client"
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { WorkExperienceInput } from "./work-experience-input";
-import { EducationDetailsInput } from "./education-details-input";
+// import { WorkExperienceInput } from "./work-experience-input";
+// import { EducationDetailsInput } from "./education-details-input";
 import { JobDescriptionInput } from "./job-description-input";
 import { ProjectsInput } from "./project-input/projects-input";
 import { EducationDetailsTable } from "./education-details/education-details-table";
@@ -18,10 +18,10 @@ const ResumeForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <EducationDetailsInput form={form} />
-        <WorkExperienceInput form={form} />
-        <JobDescriptionInput form={form} />
+        {/* <EducationDetailsInput form={form} /> */}
+        {/* <WorkExperienceInput form={form} /> */}
         <ProjectsInput form={form} />
+        <JobDescriptionInput form={form} />
         <EducationDetailsTable />
       </form>
     </Form>

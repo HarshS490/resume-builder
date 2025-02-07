@@ -333,7 +333,7 @@ const ProjectLinksForm = () => {
           <div ref={fieldRef} className="mb-6">
             <FormItem>
               <FormLabel className="font-bold text-foreground text-sm">
-                Project tags
+                Project Links
               </FormLabel>
               <Input
                 {...field}
