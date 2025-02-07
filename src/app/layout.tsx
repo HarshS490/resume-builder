@@ -5,6 +5,7 @@ import { QueryProvider } from "@/components/tanstack-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,9 +34,11 @@ export default function RootLayout({
       >
         <Toaster />
         <QueryProvider>
-          <NuqsAdapter>
-            <SessionProvider>{children}</SessionProvider>
-          </NuqsAdapter>
+          <Suspense>
+            <NuqsAdapter>
+              <SessionProvider>{children}</SessionProvider>
+            </NuqsAdapter>
+          </Suspense>
         </QueryProvider>
       </body>
     </html>

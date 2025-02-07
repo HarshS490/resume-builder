@@ -5,21 +5,21 @@ import {
 } from "@tanstack/react-table";
 
 export function useCustomTable<ColType>({
-  data,
-  setData,
+  fields,
+  remove,
   columns,
 }: {
-  data: ColType[];
-  setData: React.Dispatch<React.SetStateAction<ColType[]>>;
+  fields: ColType[];
+  remove: (index: number) => void;
   columns: ColumnDef<ColType>[];
 }) {
   return useReactTable({
-    data,
-    columns: columns,
+    data: fields,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     meta: {
       removeRow: (rowIndex: number) => {
-        setData((prev) => prev.filter((_, i) => i !== rowIndex));
+        remove(rowIndex);
       },
     },
   });

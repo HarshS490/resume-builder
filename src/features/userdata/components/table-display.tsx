@@ -16,20 +16,14 @@ import {
 
 export function TableDisplay<DataType>({
   columns,
-  AddNewDialog,
   table,
-  setData,
 }: {
   columns: ColumnDef<DataType>[];
-  AddNewDialog: React.FC<{
-    setData: React.Dispatch<React.SetStateAction<DataType[]>>;
-  }>;
   table: TableType<DataType>;
-  setData: React.Dispatch<React.SetStateAction<DataType[]>>;
 }) {
   {
     return (
-      <div className="max-w-prose mx-auto ">
+      <div className="max-w-prose">
         <div className="border rounded-md">
           <Table>
             <TableHeader>
@@ -73,7 +67,6 @@ export function TableDisplay<DataType>({
             </TableBody>
           </Table>
         </div>
-        <AddNewDialog setData={setData} />
       </div>
     );
   }

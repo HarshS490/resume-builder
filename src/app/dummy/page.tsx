@@ -1,11 +1,10 @@
-import { EducationDetailsTable } from "@/features/userdata/components/education-details/education-details-table";
-import { WorkExperienceTable } from "@/features/userdata/components/work-experience/work-experience-table";
+"use client";
+import { ResumeForm } from "@/features/userdata/components/resume-form";
 
 const Page = () => {
   return (
     <div>
-      <EducationDetailsTable />
-      <WorkExperienceTable />
+      <ResumeForm />
     </div>
   );
 };

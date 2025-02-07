@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Trash2 } from "lucide-react";
-import { WorkExperience } from "./work-experience-schema";
+import { WorkExperience } from "../../schemas";
 
 export const workExperienceColumns: ColumnDef<WorkExperience>[] = [
   {

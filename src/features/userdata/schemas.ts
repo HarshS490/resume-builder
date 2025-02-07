@@ -31,12 +31,33 @@ export const EducationDetailSchema = z.object({
   score: z.coerce.number().min(0, "Score cannot be negative"),
 });
 
+export type EducationDetails = z.infer<typeof EducationDetailSchema>;
+
+export const WorkAchievementsSchema = z
+  .array(z.string().max(20, "Achievement can be at most 20 characters"))
+  .max(4, "Maximum 4 achievements are allowed");
+
+export const WorkExperienceDetailSchema = z.object({
+  company: z.string().min(1),
+  role: z.string().min(1),
+  startDate: z.date(),
+  endDate: z.union([z.date(), z.literal("current")]),
+  aboutRole: z
+    .string()
+    .max(500, "About role should be less than 500 characters"),
+  achievements: WorkAchievementsSchema,
+});
+
+export type WorkExperience = z.infer<typeof WorkExperienceDetailSchema>;
+export type WorkAchievements = z.infer<typeof WorkAchievementsSchema>;
+
 export const achievementSchema = z.object({
   value: z.string().min(20, {message: "Describe your achievement more"}).default(""),
 });
 
 export const resumeSchema = z.object({
   education_details: z.array(EducationDetailSchema),
+  work_experience: z.array(WorkExperienceDetailSchema),
   projects: z.array(projectSchema),
   job_description: jobDescriptionSchema,
   achievements: z.array(achievementSchema),

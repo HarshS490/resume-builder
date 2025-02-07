@@ -1,15 +1,15 @@
 "use client";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-// import { WorkExperienceInput } from "./work-experience-input";
-// import { EducationDetailsInput } from "./education-details-input";
 import { JobDescriptionInput } from "./job-description-input";
 import { ProjectsInput } from "./project-input/projects-input";
-import { EducationDetailsTable } from "./education-details/education-details-table";
+
 import { z } from "zod";
 import { resumeSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AchievementsInput } from "./achievements-input/achievements-input";
+import { WorkExperienceInput } from "./work-experience/work-experience-input";
+import { EducationDetailInput } from "./education-details/education-detail-input";
 
 const ResumeForm = () => {
   const onSubmit = () => {};
@@ -19,12 +19,11 @@ const ResumeForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        {/* <EducationDetailsInput form={form} /> */}
-        {/* <WorkExperienceInput form={form} /> */}
         <AchievementsInput form={form} />
         <ProjectsInput form={form} />
         <JobDescriptionInput form={form} />
-        <EducationDetailsTable />
+        <WorkExperienceInput form={form} />
+        <EducationDetailInput form={form} />
       </form>
     </Form>
   );
