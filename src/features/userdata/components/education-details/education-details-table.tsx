@@ -1,16 +1,15 @@
 "use client";
 
-import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
+import { useCustomTable } from "../../get-table";
 import { TableDisplay } from "../table-display";
 import { educationColumns } from "./columns";
 import { EducationDetails } from "./education-detail-schema";
 import NewEducationDetailDialog from "./new-education-detail-dialog";
-import { getTable } from "../../get-table";
 
 export const EducationDetailsTable = () => {
   const [data, setData] = useState<EducationDetails[]>([]);
-  const table = getTable({
+  const table = useCustomTable({
     data,
     setData,
     columns: educationColumns,

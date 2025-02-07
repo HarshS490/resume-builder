@@ -4,7 +4,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-export function getTable<ColType>({
+export function useCustomTable<ColType>({
   data,
   setData,
   columns,
