@@ -1,8 +1,8 @@
 "use client";
 
-import { useController, useForm, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
-import { basicUserDetailSchema, resumeSchema } from "../../schemas";
+import { resumeSchema } from "../../schemas";
 import {
   Card,
   CardContent,
@@ -10,9 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Form,
   FormField,
   FormItem,
   FormLabel,
