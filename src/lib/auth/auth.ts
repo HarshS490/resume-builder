@@ -1,5 +1,7 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
 import { AuthProviders } from "./providers";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "../prisma";
 
 export const authOptions: NextAuthConfig = {
   providers: AuthProviders,
@@ -17,5 +19,6 @@ export const authOptions: NextAuthConfig = {
       return session;
     },
   },
+  adapter: PrismaAdapter(prisma),
 };
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions);
