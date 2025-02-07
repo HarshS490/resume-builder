@@ -6,7 +6,7 @@ export const repoBulletPromptSchema = z.array(
   })
 );
 
-export const jobDescriptionSchema = z.string().default("")
+export const jobDescriptionSchema = z.string().default("");
 export const projectTagSchema = z.object({ value: z.string().min(3).max(50) });
 export const projectLinksSchema = z.object({
   value: z.string().regex(/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-]*)*\/?$/, {
@@ -31,10 +31,15 @@ export const EducationDetailSchema = z.object({
   score: z.coerce.number().min(0, "Score cannot be negative"),
 });
 
+export const achievementSchema = z.object({
+  value: z.string().min(20, {message: "Describe your achievement more"}).default(""),
+});
+
 export const resumeSchema = z.object({
   education_details: z.array(EducationDetailSchema),
   projects: z.array(projectSchema),
   job_description: jobDescriptionSchema,
+  achievements: z.array(achievementSchema),
 });
 
 export type resumeSchemaType = z.infer<typeof resumeSchema>;

@@ -33,7 +33,7 @@ import { Badge } from "@/components/ui/badge";
 export type AddProjectFormProps = {
   initialValue?: Partial<z.infer<typeof projectSchema>>;
   className?: string;
-  action ?: "Edit" | "Add"
+  action?: "Edit" | "Add";
   onSubmit: (value: z.infer<typeof projectSchema>) => void;
 };
 export const ProjectForm = ({
@@ -42,7 +42,7 @@ export const ProjectForm = ({
   onSubmit,
   action,
 }: AddProjectFormProps) => {
-  action ??= "Add"
+  action ??= "Add";
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {

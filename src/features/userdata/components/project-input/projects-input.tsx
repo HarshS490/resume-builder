@@ -61,7 +61,6 @@ export const ProjectsInput = ({ form }: ProjectsInputProps) => {
   };
   const currentProject =
     currIndex === -1 ? defaultProjectValue : projects[currIndex];
-  console.log(defaultProjectValue);
   return (
     <Card className="bg-background rounded-none shadow-none">
       <ProjectFormModal
