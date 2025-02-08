@@ -43,7 +43,6 @@ export const ProjectsInput = ({ form }: ProjectsInputProps) => {
     await open();
   };
   const onSubmitProject = async (value: z.infer<typeof projectSchema>) => {
-    console.log("Submit Project", value);
     if (currIndex === -1) {
       append(value);
     } else {
