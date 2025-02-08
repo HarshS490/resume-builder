@@ -1,5 +1,12 @@
+"use client";
+import { ResumeForm } from "@/features/userdata/components/resume-form";
+
 const Page = () => {
-  return <div>Page</div>;
+  return (
+    <div>
+      <ResumeForm />
+    </div>
+  );
 };
 
 export default Page;
