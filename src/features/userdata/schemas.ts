@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+export const encodedUrlSchema = z.string().refine((value) => {
+  try {
+    return encodeURI(decodeURIComponent(value)) === value; // Ensures it's encoded
+  } catch {
+    return false; // Invalid URL encoding
+  }
+}, {
+  message: "Invalid encoded URL",
+})
+
 export const repoBulletPromptSchema = z.array(
   z.object({
     text: z.string(),
