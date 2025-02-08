@@ -12,7 +12,6 @@ function useGetGithubUserRepositories() {
       if (user_data?.status !== "Authenticated") {
         throw new Error("User not authenticated with github");
       }
-      console.log("User", user_data)
       const repo_data_res =
         await client.api.userdata.github.user.repositories.$get();
       if (!repo_data_res.ok) {

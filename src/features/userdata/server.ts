@@ -167,7 +167,7 @@ const app = new Hono()
         );
         return c.json(res.data);
       } catch {
-        return c.json({ error: "Failed to fetch" }, 400);
+        return c.text("", 200);
       }
     }
   )

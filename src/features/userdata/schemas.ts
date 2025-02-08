@@ -1,14 +1,17 @@
 import { z } from "zod";
 
-export const encodedUrlSchema = z.string().refine((value) => {
-  try {
-    return encodeURI(decodeURIComponent(value)) === value; // Ensures it's encoded
-  } catch {
-    return false; // Invalid URL encoding
+export const encodedUrlSchema = z.string().refine(
+  (value) => {
+    try {
+      return encodeURI(decodeURIComponent(value)) === value; // Ensures it's encoded
+    } catch {
+      return false; // Invalid URL encoding
+    }
+  },
+  {
+    message: "Invalid encoded URL",
   }
-}, {
-  message: "Invalid encoded URL",
-})
+);
 
 export const repoBulletPromptSchema = z.array(
   z.object({
@@ -73,9 +76,17 @@ export const extraActivitySchema = z.object({
 });
 
 export const basicUserDetailSchema = z.object({
-  firstName: z.string().min(1),
+  firstName: z.string().min(1).default(""),
   middleName: z.string().default(""),
   lastName: z.string().default(""),
+  contact: z
+    .string()
+    .regex(
+      /^\d{7,15}$/,
+      "Invalid phone number. It should contain only digits and be 7 to 15 characters long."
+    )
+    .default(""),
+  email: z.string().email().default(""),
 });
 export const resumeSchema = z.object({
   education_details: z.array(EducationDetailSchema),

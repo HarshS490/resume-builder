@@ -19,7 +19,6 @@ function useGetGithubUserRepoReadme({
       if (user_data?.status !== "Authenticated") {
         throw new Error("User not authenticated with github");
       }
-      console.log("User", user_data);
       const repo_data_res =
         await client.api.userdata.github.user.repo.readme.$get({
           query: { owner, repo },

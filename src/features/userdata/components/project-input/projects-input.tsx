@@ -119,7 +119,7 @@ const ProjectCard = ({
 }: ProjectCardProps) => {
   return (
     <div className="flex flex-col gap-4 p-4 border border-border rounded-md ">
-      <div className="flex w-full gap-1">
+      <div className="flex w-full gap-1 flex-wrap">
         <span className="font-bold">{project_title}</span>
         {project_links?.length > 0 && <span>|</span>}
         {project_links?.map((item, index) => (
