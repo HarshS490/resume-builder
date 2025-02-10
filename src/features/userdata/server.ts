@@ -81,7 +81,7 @@ const app = new Hono()
       // const redirectPath = encodeURIComponent(
       //   `${APP_URL}/new?origin_uri=${origin_uri}`
       // );
-      const path = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLID}&redirect_uri=${redirectPath}`;
+      const path = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLID}&redirect_uri=${redirectPath}&scope=repo:read`;
       return c.redirect(path, 302);
     }
   )
