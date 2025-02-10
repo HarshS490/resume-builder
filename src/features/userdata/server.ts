@@ -16,7 +16,7 @@ import { encodedUrlSchema } from "./schemas";
 
 const app = new Hono()
   .get("/github/user/repositories", authMiddleware, async (c) => {
-    const user_id = c.get("session").user?.id;
+    const user_id = c.get("session").userId
     if (!user_id) {
       return c.json({ error: "Bad Request" }, 401);
     }
@@ -42,7 +42,7 @@ const app = new Hono()
     return c.json(res.data);
   })
   .get("/github/user", authMiddleware, async (c) => {
-    const user_id = c.get("session").user?.id;
+    const user_id = c.get("session").userId
     if (!user_id) {
       return c.json({ error: "Unauthorized" }, 401);
     }
@@ -90,7 +90,7 @@ const app = new Hono()
     authMiddleware,
     zValidator("query", z.object({ code: z.string(), origin_uri: z.string() })),
     async (c) => {
-      const user_id = c.get("session").user?.id as string;
+      const user_id = c.get("session").userId as string;
       const { code, origin_uri } = c.req.valid("query");
       const req_url = `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLID}&client_secret=${GITHUB_CLID_SECRET}&code=${code}`;
       const data = (
@@ -118,7 +118,7 @@ const app = new Hono()
     }
   )
   .delete("/github/unregister", authMiddleware, async (c) => {
-    const user_id = c.get("session").user?.id;
+    const user_id = c.get("session").userId;
     if (!user_id) {
       return c.json({ error: "Bad request" }, 400);
     }
@@ -141,7 +141,7 @@ const app = new Hono()
       z.object({ owner: z.string().min(1), repo: z.string().min(1) })
     ),
     async (c) => {
-      const user_id = c.get("session").user?.id;
+      const user_id = c.get("session").userId;
       if (!user_id) {
         return c.json({ error: "Bad request" }, 400);
       }

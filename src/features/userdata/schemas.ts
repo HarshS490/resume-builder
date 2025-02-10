@@ -82,7 +82,7 @@ export const basicUserDetailSchema = z.object({
   contact: z
     .string()
     .regex(
-      /^\d{7,15}$/,
+      /^\+?[1-9]\d{1,14}$/,
       "Invalid phone number. It should contain only digits and be 7 to 15 characters long."
     )
     .default(""),

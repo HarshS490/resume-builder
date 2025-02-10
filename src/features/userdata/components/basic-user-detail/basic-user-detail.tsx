@@ -18,13 +18,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PhoneInput } from "./phone-input";
+import { cn } from "@/lib/utils";
 
 type BasicUserDetailProps = {
   form: UseFormReturn<z.infer<typeof resumeSchema>>;
+  className?: string;
 };
-export const BasicUserDetail = ({ form }: BasicUserDetailProps) => {
+export const BasicUserDetail = ({ form, className }: BasicUserDetailProps) => {
   return (
-    <Card className="bg-background rounded-none shadow-none">
+    <Card
+      className={cn(
+        "bg-background rounded-none shadow-none border-none",
+        className
+      )}
+    >
       <CardHeader>
         <CardTitle>Basic Details</CardTitle>
         <CardDescription>Enter project details</CardDescription>

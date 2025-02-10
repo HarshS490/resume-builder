@@ -23,7 +23,7 @@ type JobDescriptionInputProps = {
 
 export const JobDescriptionInput = ({ form }: JobDescriptionInputProps) => {
   return (
-    <Card className="bg-background rounded-none shadow-none">
+    <Card className="bg-background rounded-none shadow-none border-none">
       <CardHeader>
         <CardTitle>Job Description</CardTitle>
         <CardDescription>

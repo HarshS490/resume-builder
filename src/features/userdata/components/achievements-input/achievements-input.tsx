@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { EditIcon, PlusCircleIcon, Trash2Icon } from "lucide-react";
+import { EditIcon, PlusCircleIcon, SaveIcon, Trash2Icon } from "lucide-react";
 import { KeyboardEventHandler, MouseEventHandler, useState } from "react";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,9 +19,13 @@ import { cn } from "@/lib/utils";
 
 type AchievementsInputProps = {
   form: UseFormReturn<z.infer<typeof resumeSchema>>;
+  className?: string;
 };
 
-export const AchievementsInput = ({ form }: AchievementsInputProps) => {
+export const AchievementsInput = ({
+  form,
+  className,
+}: AchievementsInputProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
   const {
@@ -61,7 +65,12 @@ export const AchievementsInput = ({ form }: AchievementsInputProps) => {
   };
 
   return (
-    <Card className="bg-background rounded-none shadow-none">
+    <Card
+      className={cn(
+        "bg-background rounded-none shadow-none border-none",
+        className
+      )}
+    >
       <CardHeader>
         <CardTitle>Achievements</CardTitle>
         <CardDescription>Describe your achievements</CardDescription>
@@ -187,7 +196,7 @@ export const EditAchievementsForm = ({
             variant={"default"}
             onClick={handleSubmit}
           >
-            <PlusCircleIcon />
+            <SaveIcon />
             <span>Save Changes</span>
           </Button>
           <Button

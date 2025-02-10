@@ -1,18 +1,24 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CheckIcon, Loader2Icon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { redirect, usePathname } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
 import { useGetGithubUser } from "../../api/use-get-github-user";
 import { cn } from "@/lib/utils";
-import { useGetGithubUserRepositories } from "../../api/use-get-github-user-repositories";
-import { DataTable } from "@/components/data-table";
-import { repoDataColumnsDef } from "../repository-table/columns";
 
-export const ConnectionsSection = () => {
+type ConnectionsSectionProps = {
+  className?: string;
+};
+export const ConnectionsSection = ({ className }: ConnectionsSectionProps) => {
   const { status } = useSession();
   const { data: github_user } = useGetGithubUser();
   const pathname = usePathname();
@@ -25,12 +31,13 @@ export const ConnectionsSection = () => {
     redirect(`/api/userdata/github/redirect?origin_uri=${encoded_url}`);
   };
 
-  const { data: repo_data } = useGetGithubUserRepositories();
-  console.log("Top level rerender")
   return (
-    <Card>
+    <Card className={cn("border-none rounded-none shadow-none", className)}>
       <CardHeader>
         <CardTitle>Connect</CardTitle>
+        <CardDescription>
+          Link your profile to import data seamlessly from other accounts.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Button
@@ -63,7 +70,6 @@ export const ConnectionsSection = () => {
           )}
         </Button>
         <div className="h-10" />
-        <DataTable columns={repoDataColumnsDef} data={repo_data ?? []} />
       </CardContent>
     </Card>
   );

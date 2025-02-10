@@ -20,11 +20,12 @@ import { useFieldArray, UseFormReturn } from "react-hook-form";
 
 type ProjectsInputProps = {
   form: UseFormReturn<z.infer<typeof resumeSchema>>;
+  className?: string
 };
 
 const defaultProjectValue = getDefaultValues(projectSchema);
 
-export const ProjectsInput = ({ form }: ProjectsInputProps) => {
+export const ProjectsInput = ({ form, className }: ProjectsInputProps) => {
   const { open, close } = useAddProjectModal();
   const [currIndex, setCurrIndex] = useState(-1);
 
@@ -61,7 +62,7 @@ export const ProjectsInput = ({ form }: ProjectsInputProps) => {
   const currentProject =
     currIndex === -1 ? defaultProjectValue : projects[currIndex];
   return (
-    <Card className="bg-background rounded-none shadow-none">
+    <Card className={cn("bg-background rounded-none shadow-none border-none", className)}>
       <ProjectFormModal
         action={currIndex === -1 ? "Add" : "Edit"}
         initialValue={currentProject}
@@ -118,7 +119,7 @@ const ProjectCard = ({
   index,
 }: ProjectCardProps) => {
   return (
-    <div className="flex flex-col gap-4 p-4 border border-border rounded-md ">
+    <div className="flex flex-col gap-4 p-4 border border-border rounded-md">
       <div className="flex w-full gap-1 flex-wrap">
         <span className="font-bold">{project_title}</span>
         {project_links?.length > 0 && <span>|</span>}
