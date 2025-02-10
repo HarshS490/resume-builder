@@ -32,6 +32,7 @@ import {
 } from "../../schemas";
 import { TableDisplay } from "../table-display";
 import { workExperienceColumns } from "./columns";
+import { RemoveRowAlertDialog } from "../remove-row-alert-dialog";
 
 const NewWorkExperienceDialog = ({
   form,
@@ -189,22 +190,6 @@ const NewWorkExperienceDialog = ({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="achievements"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-semibold text-black/80">
-                Your achievements
-              </FormLabel>
-              <FormControl>
-                <Input disabled={true} placeholder="TODO" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <Button type="submit">Add</Button>
       </form>
     </Form>
@@ -222,9 +207,11 @@ export const WorkExperienceInput = ({
     shouldUnregister: true,
   });
 
+  const [removeRow, setRemoveRow] = useState<number | null>(null);
+
   const table = useCustomTable({
     fields,
-    remove,
+    setRemoveRow,
     columns: workExperienceColumns,
   });
 
@@ -232,7 +219,6 @@ export const WorkExperienceInput = ({
     resolver: zodResolver(WorkExperienceDetailSchema),
     defaultValues: {
       aboutRole: "",
-      achievements: [],
       company: "",
       endDate: "current",
       role: "",
@@ -250,6 +236,11 @@ export const WorkExperienceInput = ({
   return (
     <>
       <TableDisplay columns={workExperienceColumns} table={table} />
+      <RemoveRowAlertDialog
+        removeRow={removeRow}
+        setRemoveRow={setRemoveRow}
+        remove={remove}
+      />
       <Button
         className="flex items-center mt-1.5"
         onClick={() => setOpen(true)}

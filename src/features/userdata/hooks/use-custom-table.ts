@@ -6,12 +6,12 @@ import {
 
 export function useCustomTable<ColType>({
   fields,
-  remove,
   columns,
+  setRemoveRow,
 }: {
   fields: ColType[];
-  remove: (index: number) => void;
   columns: ColumnDef<ColType>[];
+  setRemoveRow: (index: number) => void;
 }) {
   return useReactTable({
     data: fields,
@@ -19,7 +19,7 @@ export function useCustomTable<ColType>({
     getCoreRowModel: getCoreRowModel(),
     meta: {
       removeRow: (rowIndex: number) => {
-        remove(rowIndex);
+        setRemoveRow(rowIndex);
       },
     },
   });
