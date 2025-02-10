@@ -60,54 +60,52 @@ export const ProjectForm = ({
         {action} Project
       </h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-6">
-            <FormField
-              control={form.control}
-              name={`project_title`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-bold text-foreground text-sm">
-                    Project title
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Project Title" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name={`project_description`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-bold text-foreground text-sm">
-                    Project Description
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      className="resize-none"
-                      placeholder="Describe your project in few words..."
-                      rows={4}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <ProjectTagsForm />
-            <ProjectLinksForm />
-            <Button
-              className="w-full flex justify-center items-center text-background"
-              type="submit"
-            >
-              <PlusCircleIcon className="size-4" />
-              <span>{action} Project</span>
-            </Button>
-          </div>
-        </form>
+        <div className="flex flex-col gap-6">
+          <FormField
+            control={form.control}
+            name={`project_title`}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold text-foreground text-sm">
+                  Project title
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Project Title" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name={`project_description`}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold text-foreground text-sm">
+                  Project Description
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    className="resize-none"
+                    placeholder="Describe your project in few words..."
+                    rows={4}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <ProjectTagsForm />
+          <ProjectLinksForm />
+          <Button
+            onClick={() => form.handleSubmit(onSubmit)()}
+            className="w-full flex justify-center items-center text-background"
+          >
+            <PlusCircleIcon className="size-4" />
+            <span>{action} Project</span>
+          </Button>
+        </div>
       </Form>
     </div>
   );
