@@ -31,6 +31,7 @@ import {
 } from "../../schemas";
 import { TableDisplay } from "../table-display";
 import { educationColumns } from "./columns";
+import { RemoveRowAlertDialog } from "../remove-row-alert-dialog";
 
 const NewEducationDetailDialog = ({
   form,
@@ -209,9 +210,11 @@ export const EducationDetailInput = ({
     shouldUnregister: true,
   });
 
+  const [removeRow, setRemoveRow] = useState<number | null>(null);
+
   const table = useCustomTable({
     fields,
-    remove,
+    setRemoveRow,
     columns: educationColumns,
   });
 
@@ -236,6 +239,11 @@ export const EducationDetailInput = ({
   return (
     <>
       <TableDisplay columns={educationColumns} table={table} />
+      <RemoveRowAlertDialog
+        remove={remove}
+        removeRow={removeRow}
+        setRemoveRow={setRemoveRow}
+      />
       <Button
         className="flex items-center mt-1.5"
         onClick={() => setOpen(true)}

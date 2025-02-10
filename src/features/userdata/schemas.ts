@@ -33,10 +33,6 @@ export const EducationDetailSchema = z.object({
 
 export type EducationDetails = z.infer<typeof EducationDetailSchema>;
 
-export const WorkAchievementsSchema = z
-  .array(z.string().max(20, "Achievement can be at most 20 characters"))
-  .max(4, "Maximum 4 achievements are allowed");
-
 export const WorkExperienceDetailSchema = z.object({
   company: z.string().min(1),
   role: z.string().min(1),
@@ -45,11 +41,9 @@ export const WorkExperienceDetailSchema = z.object({
   aboutRole: z
     .string()
     .max(500, "About role should be less than 500 characters"),
-  achievements: WorkAchievementsSchema,
 });
 
 export type WorkExperience = z.infer<typeof WorkExperienceDetailSchema>;
-export type WorkAchievements = z.infer<typeof WorkAchievementsSchema>;
 
 export const achievementSchema = z.object({
   value: z

@@ -42,15 +42,6 @@ export const workExperienceColumns: ColumnDef<WorkExperience>[] = [
   },
   { accessorKey: "aboutRole", header: "About" },
   {
-    accessorKey: "achievements",
-    header: "Achievements",
-    cell: ({ row }) => {
-      const achievements: WorkExperience["achievements"] =
-        row.getValue("achievements");
-      return achievements.join(", ");
-    },
-  },
-  {
     header: "Actions",
     cell: ({ table, row }) => (
       <Button
