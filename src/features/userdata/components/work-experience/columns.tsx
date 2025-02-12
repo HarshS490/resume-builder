@@ -40,7 +40,18 @@ export const workExperienceColumns: ColumnDef<WorkExperience>[] = [
       }
     },
   },
-  { accessorKey: "aboutRole", header: "About" },
+  {
+    accessorKey: "aboutRole",
+    header: "About",
+    cell: ({ row }) => {
+      const aboutRole: WorkExperience["aboutRole"] = row.getValue("aboutRole");
+      return (
+        <span className="block overflow-hidden max-w-16 text-ellipsis">
+          {aboutRole}
+        </span>
+      );
+    },
+  },
   {
     header: "Actions",
     cell: ({ table, row }) => (

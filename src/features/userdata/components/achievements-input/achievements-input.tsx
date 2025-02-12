@@ -125,7 +125,7 @@ export const AchievementsInput = ({
         ) : (
           <Button
             variant="default"
-            className="flex justify-center items-center w-full lg:w-56 my-10"
+            className="flex justify-center items-center w-full md:w-56 my-10"
             onClick={onAddAchievement}
           >
             <PlusCircleIcon className="size-4" />

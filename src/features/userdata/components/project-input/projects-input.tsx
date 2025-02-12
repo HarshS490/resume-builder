@@ -20,7 +20,7 @@ import { useFieldArray, UseFormReturn } from "react-hook-form";
 
 type ProjectsInputProps = {
   form: UseFormReturn<z.infer<typeof resumeSchema>>;
-  className?: string
+  className?: string;
 };
 
 const defaultProjectValue = getDefaultValues(projectSchema);
@@ -40,7 +40,7 @@ export const ProjectsInput = ({ form, className }: ProjectsInputProps) => {
   });
 
   const onAddProject = async () => {
-    setCurrIndex(-1)
+    setCurrIndex(-1);
     await open();
   };
   const onSubmitProject = async (value: z.infer<typeof projectSchema>) => {
@@ -62,7 +62,12 @@ export const ProjectsInput = ({ form, className }: ProjectsInputProps) => {
   const currentProject =
     currIndex === -1 ? defaultProjectValue : projects[currIndex];
   return (
-    <Card className={cn("bg-background rounded-none shadow-none border-none", className)}>
+    <Card
+      className={cn(
+        "bg-background rounded-none shadow-none border-none",
+        className
+      )}
+    >
       <ProjectFormModal
         action={currIndex === -1 ? "Add" : "Edit"}
         initialValue={currentProject}
@@ -86,14 +91,14 @@ export const ProjectsInput = ({ form, className }: ProjectsInputProps) => {
               />
             ))
           ) : (
-            <div className="flex items-center justify-center text-xl text-muted-foreground border-border border-4 rounded-xl border-dashed h-[130px]">
+            <div className="flex items-center justify-center text-xl text-muted-foreground border-black/40 border-[3px] rounded-xl border-dashed h-[130px]">
               No project details added
             </div>
           )}
         </div>
         <Button
           variant="default"
-          className="flex justify-center items-center w-full lg:w-56 my-10"
+          className="flex justify-center items-center w-full md:w-56 my-10"
           onClick={onAddProject}
         >
           <PlusCircle className="size-4" />

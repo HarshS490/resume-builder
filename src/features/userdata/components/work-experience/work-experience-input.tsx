@@ -33,6 +33,13 @@ import {
 import { TableDisplay } from "../table-display";
 import { workExperienceColumns } from "./columns";
 import { RemoveRowAlertDialog } from "../remove-row-alert-dialog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const NewWorkExperienceDialog = ({
   form,
@@ -43,10 +50,7 @@ const NewWorkExperienceDialog = ({
 }) => {
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 px-6 py-4"
-      >
+      <div className="flex flex-col gap-3 px-6 py-4">
         <FormField
           control={form.control}
           name="role"
@@ -190,16 +194,24 @@ const NewWorkExperienceDialog = ({
             </FormItem>
           )}
         />
-        <Button type="submit">Add</Button>
-      </form>
+        <Button
+          onClick={() => {
+            form.handleSubmit(onSubmit)();
+          }}
+        >
+          Add
+        </Button>
+      </div>
     </Form>
   );
 };
 
 export const WorkExperienceInput = ({
   form,
+  className,
 }: {
   form: UseFormReturn<resumeSchemaType>;
+  className?: string;
 }) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -234,27 +246,38 @@ export const WorkExperienceInput = ({
   };
 
   return (
-    <>
-      <TableDisplay columns={workExperienceColumns} table={table} />
-      <RemoveRowAlertDialog
-        removeRow={removeRow}
-        setRemoveRow={setRemoveRow}
-        remove={remove}
-      />
-      <Button
-        className="flex items-center mt-1.5"
-        onClick={() => setOpen(true)}
-      >
-        <PlusCircle />
-        Add new work experience
-      </Button>
-      <ResponsiveModal
-        onOpenChange={setOpen}
-        open={open}
-        title="Add new work experience"
-      >
-        <NewWorkExperienceDialog form={miniForm} onSubmit={onSubmit} />
-      </ResponsiveModal>
-    </>
+    <Card
+      className={cn(
+        "bg-background rounded-none shadow-none border-none",
+        className
+      )}
+    >
+      <CardHeader>
+        <CardTitle>Work experience</CardTitle>
+        <CardDescription>Add your work experiences</CardDescription>
+      </CardHeader>
+      <CardContent className="w-full flex flex-col gap-2">
+        <TableDisplay columns={workExperienceColumns} table={table} />
+        <RemoveRowAlertDialog
+          removeRow={removeRow}
+          setRemoveRow={setRemoveRow}
+          remove={remove}
+        />
+        <Button
+          className="flex items-center mt-1.5 w-full md:w-fit"
+          onClick={() => setOpen(true)}
+        >
+          <PlusCircle />
+          Add new work experience
+        </Button>
+        <ResponsiveModal
+          onOpenChange={setOpen}
+          open={open}
+          title="Add new work experience"
+        >
+          <NewWorkExperienceDialog form={miniForm} onSubmit={onSubmit} />
+        </ResponsiveModal>
+      </CardContent>
+    </Card>
   );
 };

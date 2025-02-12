@@ -43,8 +43,8 @@ export const BasicUserDetail = ({ form, className }: BasicUserDetailProps) => {
             name="name.firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First name</FormLabel>
-                <Input {...field} placeholder="first name" />
+                <FormLabel htmlFor="first-name">First name</FormLabel>
+                <Input id="first-name" {...field} placeholder="John" />
                 <FormMessage />
               </FormItem>
             )}
@@ -54,8 +54,8 @@ export const BasicUserDetail = ({ form, className }: BasicUserDetailProps) => {
             name="name.middleName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Middle name</FormLabel>
-                <Input {...field} placeholder="middle name" />
+                <FormLabel htmlFor="middle-name">Middle name</FormLabel>
+                <Input id="middle-name" {...field} placeholder="David" />
                 <FormMessage />
               </FormItem>
             )}
@@ -65,21 +65,26 @@ export const BasicUserDetail = ({ form, className }: BasicUserDetailProps) => {
             name="name.lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First name</FormLabel>
-                <Input {...field} placeholder="last name" />
+                <FormLabel htmlFor="last-name">Last name</FormLabel>
+                <Input id="last-name" {...field} placeholder="Smith" />
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className="grid  md:grid-cols-2 gap-4 w-full">
+        <div className="grid md:grid-cols-2 gap-4 w-full">
           <FormField
             control={form.control}
             name="name.contact"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Contact No.</FormLabel>
-                <PhoneInput className="w-full" {...field} international />
+                <FormLabel htmlFor="contact">Contact No.</FormLabel>
+                <PhoneInput
+                  id="contact"
+                  className="w-full"
+                  {...field}
+                  international
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -89,8 +94,8 @@ export const BasicUserDetail = ({ form, className }: BasicUserDetailProps) => {
             name="name.email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
-                <Input {...field} placeholder="user@example.com" />
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input id="email" {...field} placeholder="user@example.com" />
                 <FormMessage />
               </FormItem>
             )}

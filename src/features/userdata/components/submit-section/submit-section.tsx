@@ -8,7 +8,7 @@ export const SubmitSection = () => {
   return (
     <Card className={cn("shadow-none border-none rounded-none")}>
       <CardHeader>
-        <Button type="submit" className="w-full max-w-[200px]">
+        <Button type="submit" className="w-full md:max-w-[200px] ml-auto">
           Submit
         </Button>
       </CardHeader>

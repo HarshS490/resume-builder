@@ -32,6 +32,13 @@ import {
 import { TableDisplay } from "../table-display";
 import { educationColumns } from "./columns";
 import { RemoveRowAlertDialog } from "../remove-row-alert-dialog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const NewEducationDetailDialog = ({
   form,
@@ -42,10 +49,7 @@ const NewEducationDetailDialog = ({
 }) => {
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 px-6 py-4"
-      >
+      <div className="flex flex-col gap-3 px-6 py-4">
         <FormField
           control={form.control}
           name="qualification"
@@ -193,16 +197,24 @@ const NewEducationDetailDialog = ({
             </FormItem>
           )}
         />
-        <Button type="submit">Add</Button>
-      </form>
+        <Button
+          onClick={() => {
+            form.handleSubmit(onSubmit)();
+          }}
+        >
+          Add
+        </Button>
+      </div>
     </Form>
   );
 };
 
 export const EducationDetailInput = ({
   form,
+  className,
 }: {
   form: UseFormReturn<resumeSchemaType>;
+  className?: string;
 }) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -237,27 +249,38 @@ export const EducationDetailInput = ({
   };
 
   return (
-    <>
-      <TableDisplay columns={educationColumns} table={table} />
-      <RemoveRowAlertDialog
-        remove={remove}
-        removeRow={removeRow}
-        setRemoveRow={setRemoveRow}
-      />
-      <Button
-        className="flex items-center mt-1.5"
-        onClick={() => setOpen(true)}
-      >
-        <PlusCircle />
-        Add new education detail
-      </Button>
-      <ResponsiveModal
-        onOpenChange={setOpen}
-        open={open}
-        title="Add new education detail"
-      >
-        <NewEducationDetailDialog form={miniForm} onSubmit={onSubmit} />
-      </ResponsiveModal>
-    </>
+    <Card
+      className={cn(
+        "bg-background rounded-none shadow-none border-none",
+        className
+      )}
+    >
+      <CardHeader>
+        <CardTitle>Education</CardTitle>
+        <CardDescription>Add your education details</CardDescription>
+      </CardHeader>
+      <CardContent className="w-full flex flex-col gap-2">
+        <TableDisplay columns={educationColumns} table={table} />
+        <RemoveRowAlertDialog
+          remove={remove}
+          removeRow={removeRow}
+          setRemoveRow={setRemoveRow}
+        />
+        <Button
+          className="flex items-center mt-1.5 w-full md:w-fit"
+          onClick={() => setOpen(true)}
+        >
+          <PlusCircle />
+          Add new education detail
+        </Button>
+        <ResponsiveModal
+          onOpenChange={setOpen}
+          open={open}
+          title="Add new education detail"
+        >
+          <NewEducationDetailDialog form={miniForm} onSubmit={onSubmit} />
+        </ResponsiveModal>
+      </CardContent>
+    </Card>
   );
 };

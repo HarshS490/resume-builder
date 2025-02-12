@@ -4,15 +4,15 @@ import { useForm } from "react-hook-form";
 import { JobDescriptionInput } from "./job-description-input";
 import { ProjectsInput } from "./project-input/projects-input";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { resumeSchema, resumeSchemaType } from "../schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { AchievementsInput } from "./achievements-input/achievements-input";
-import { WorkExperienceInput } from "./work-experience/work-experience-input";
-import { EducationDetailInput } from "./education-details/education-detail-input";
 import { BasicUserDetail } from "./basic-user-detail/basic-user-detail";
-import { ConnectionsSection } from "./work-experience/connections-section";
+import { EducationDetailInput } from "./education-details/education-detail-input";
 import { SubmitSection } from "./submit-section/submit-section";
+import { ConnectionsSection } from "./work-experience/connections-section";
+import { WorkExperienceInput } from "./work-experience/work-experience-input";
 
 type ResumeFormProps = {
   onSubmit?: (values: resumeSchemaType) => void;
@@ -20,7 +20,7 @@ type ResumeFormProps = {
 const ResumeForm = ({ onSubmit }: ResumeFormProps) => {
   const handleSubmit = (values: resumeSchemaType) => {
     onSubmit?.(values);
-    console.log(values)
+    console.log(values);
   };
   const form = useForm<z.infer<typeof resumeSchema>>({
     resolver: zodResolver(resumeSchema),
@@ -42,13 +42,20 @@ const ResumeForm = ({ onSubmit }: ResumeFormProps) => {
   });
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <BasicUserDetail form={form} />
-        <ConnectionsSection />
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="max-w-6xl mx-auto"
+      >
+        <div className="md:flex md:items-center">
+          <BasicUserDetail form={form} />
+          <ConnectionsSection />
+        </div>
         <ProjectsInput form={form} />
         <AchievementsInput form={form} />
-        <WorkExperienceInput form={form} />
-        <EducationDetailInput form={form} />
+        <div className="lg:flex">
+          <WorkExperienceInput className="flex-1" form={form} />
+          <EducationDetailInput className="flex-1" form={form} />
+        </div>
         <JobDescriptionInput form={form} />
         <SubmitSection />
       </form>
