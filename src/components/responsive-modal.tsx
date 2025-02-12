@@ -36,8 +36,10 @@ export const ResponsiveModal = ({
       <DrawerHeader className="hidden">
         <DrawerTitle className="text-center">{title}</DrawerTitle>
       </DrawerHeader>
-      <DrawerContent className="overflow-y-auto hide-scrollbar max-h-[85vh]">
-        {children}
+      <DrawerContent className="max-h-[85vh]">
+        <div className="max-h-full overflow-y-auto hide-scrollbar">
+          {children}
+        </div>
       </DrawerContent>
     </Drawer>
   );

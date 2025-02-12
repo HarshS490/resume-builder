@@ -91,7 +91,7 @@ export const ProjectsInput = ({ form, className }: ProjectsInputProps) => {
               />
             ))
           ) : (
-            <div className="flex items-center justify-center text-xl text-muted-foreground border-black/40 border-[3px] rounded-xl border-dashed h-[130px]">
+            <div className="flex col-span-full items-center justify-center text-xl text-muted-foreground border-black/40 border-[3px] rounded-xl border-dashed h-[130px]">
               No project details added
             </div>
           )}

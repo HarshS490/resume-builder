@@ -76,42 +76,48 @@ export const AchievementsInput = ({
         <CardDescription>Describe your achievements</CardDescription>
       </CardHeader>
       <CardContent className="w-full flex flex-col gap-2">
-        {achievementsField.map((field, index) => {
-          const disabled = editIndex !== -1 && index !== editIndex;
-          return (
-            <div
-              key={field.id}
-              className={cn(
-                "w-full flex border-border border p-2 rounded-md",
-                disabled && "bg-neutral-200 text-muted-foreground"
-              )}
-            >
-              <span className="w-full flex items-center px-2 overflow-hidden">
-                <span className="line-clamp-1 text-ellipsis font-semibold">
-                  {field.value}
+        {achievementsField.length === 0 ? (
+          !isOpen && <div className="flex select-none col-span-full items-center justify-center text-xl text-muted-foreground border-black/40 border-[3px] rounded-xl border-dashed h-[54px]">
+            No achievements have been added yet.
+          </div>
+        ) : (
+          achievementsField.map((field, index) => {
+            const disabled = editIndex !== -1 && index !== editIndex;
+            return (
+              <div
+                key={field.id}
+                className={cn(
+                  "w-full flex border-border border p-2 rounded-md",
+                  disabled && "bg-neutral-200 text-muted-foreground"
+                )}
+              >
+                <span className="w-full flex items-center px-2 overflow-hidden">
+                  <span className="line-clamp-1 text-ellipsis font-semibold">
+                    {field.value}
+                  </span>
                 </span>
-              </span>
-              <div className="flex gap-2 shrink-0">
-                <Button
-                  variant={index === editIndex ? "default" : "outline"}
-                  size={"sm"}
-                  disabled={editIndex !== -1}
-                  onClick={() => onEdit(index)}
-                >
-                  <EditIcon />
-                </Button>
-                <Button
-                  size={"sm"}
-                  variant={"destructive"}
-                  onClick={() => remove(index)}
-                  disabled={editIndex !== -1}
-                >
-                  <Trash2Icon />
-                </Button>
+                <div className="flex gap-2 shrink-0">
+                  <Button
+                    variant={index === editIndex ? "default" : "outline"}
+                    size={"sm"}
+                    disabled={editIndex !== -1}
+                    onClick={() => onEdit(index)}
+                  >
+                    <EditIcon />
+                  </Button>
+                  <Button
+                    size={"sm"}
+                    variant={"destructive"}
+                    onClick={() => remove(index)}
+                    disabled={editIndex !== -1}
+                  >
+                    <Trash2Icon />
+                  </Button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
         {isOpen ? (
           editIndex === -1 ? (
             <AddAchievementsForm onCancel={onCancel} onSubmit={onSubmit} />

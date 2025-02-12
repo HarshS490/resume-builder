@@ -240,7 +240,7 @@ const ProjectTagsForm = () => {
                 )}
               </Command>
               <FormMessage />
-              <div className="flex gap-2 mb-4">
+              <div className="flex flex-wrap justify-center gap-2 mb-4">
                 {fields.map((item, index) => {
                   return (
                     <Badge
@@ -339,7 +339,7 @@ const ProjectLinksForm = () => {
                 onKeyDown={handleKeydown}
               />
               <FormMessage />
-              <div className="flex gap-2 mb-4">
+              <div className="flex flex-wrap justify-center gap-2 mb-4">
                 {fields.map((item, index) => {
                   return (
                     <Badge
