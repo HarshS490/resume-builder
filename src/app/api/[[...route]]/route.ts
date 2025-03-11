@@ -1,5 +1,6 @@
 import { authMiddleware } from "@/features/auth/server";
 import userdata from "@/features/userdata/server";
+import ai from "@/features/ai/server"
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
@@ -13,7 +14,8 @@ const routes = app
     const user = c.get("session");
     return c.json({ message: "protected", user });
   })
-  .route("/userdata", userdata);
+  .route("/userdata", userdata)
+  .route("/ai",ai)
 
 export const POST = handle(app);
 export const GET = handle(app);

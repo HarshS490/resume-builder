@@ -13,36 +13,26 @@ import axios from "axios";
 import { Redis } from "@upstash/redis";
 import { authMiddleware } from "../auth/server";
 import { encodedUrlSchema } from "./schemas";
+import { getUserRepositoryList } from "../ai/helpers";
+import { redis } from "@/lib/redis";
 
 const app = new Hono()
   .get("/github/user/repositories", authMiddleware, async (c) => {
-    const user_id = c.get("session").userId
+    const user_id = c.get("session").userId;
     if (!user_id) {
       return c.json({ error: "Bad Request" }, 401);
     }
-    const redis = new Redis({
-      url: REDIS_URL,
-      token: REDIS_TOKEN,
-    });
-    const access_token = await redis.get(`github_access_token_${user_id}`);
+    const access_token = (await redis.get(
+      `github_access_token_${user_id}`
+    )) as string;
     if (!access_token) {
       return c.json({ error: "Unregistered" }, 401);
     }
-
-    const url = `https://api.github.com/user/repos`;
-    const res = await axios.get(url, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    if (res.status !== 200) {
-      return c.json({ error: "Unable to fetch repositories" }, 400);
-    }
-    return c.json(res.data);
+    const data = await getUserRepositoryList({ token: access_token });
+    return c.json(data);
   })
   .get("/github/user", authMiddleware, async (c) => {
-    const user_id = c.get("session").userId
+    const user_id = c.get("session").userId;
     if (!user_id) {
       return c.json({ error: "Unauthorized" }, 401);
     }
@@ -122,10 +112,6 @@ const app = new Hono()
     if (!user_id) {
       return c.json({ error: "Bad request" }, 400);
     }
-    const redis = new Redis({
-      url: REDIS_URL,
-      token: REDIS_TOKEN,
-    });
     const access_token = await redis.get(`github_access_token_${user_id}`);
     if (!access_token) {
       return c.json({ error: "Unregistered" }, 404);
@@ -145,10 +131,6 @@ const app = new Hono()
       if (!user_id) {
         return c.json({ error: "Bad request" }, 400);
       }
-      const redis = new Redis({
-        url: REDIS_URL,
-        token: REDIS_TOKEN,
-      });
       const access_token = await redis.get(`github_access_token_${user_id}`);
       if (!access_token) {
         return c.json({ error: "Unregistered" }, 404);
@@ -161,7 +143,7 @@ const app = new Hono()
           {
             headers: {
               Accept: "application/vnd.github.raw+json",
-              Authorization: `Bearer ${access_token}`
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );

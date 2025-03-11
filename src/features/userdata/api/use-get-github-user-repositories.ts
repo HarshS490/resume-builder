@@ -3,10 +3,11 @@
 import { client } from "@/lib/rpc";
 import { useQuery } from "@tanstack/react-query";
 import { useGetGithubUser } from "./use-get-github-user";
+import { githubRepositoryResponseType } from "../types";
 
 function useGetGithubUserRepositories() {
   const {data : user_data} = useGetGithubUser()
-  const query = useQuery({
+  const query = useQuery<githubRepositoryResponseType[]>({
     queryKey: ["github", "user", user_data?.status],
     queryFn: async () => {
       if (user_data?.status !== "Authenticated") {

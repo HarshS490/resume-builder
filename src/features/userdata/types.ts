@@ -35,3 +35,10 @@ export type promptTemplateType = {
   text : string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } & Record<any,any>
+
+export type githubRepositoryResponseType = {
+  id: string, 
+  name: string, 
+  html_url?:string, 
+  homepage?:string, 
+}
