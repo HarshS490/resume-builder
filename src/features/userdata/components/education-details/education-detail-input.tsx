@@ -206,7 +206,7 @@ export const EducationDetailInput = ({
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "education_details",
-    shouldUnregister: true,
+    shouldUnregister: false,
   });
 
   const table = useCustomTable({

@@ -219,7 +219,7 @@ export const WorkExperienceInput = ({
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "work_experience",
-    shouldUnregister: true,
+    shouldUnregister: false,
   });
 
   const table = useCustomTable({

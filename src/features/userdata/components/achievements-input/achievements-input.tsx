@@ -36,7 +36,7 @@ export const AchievementsInput = ({
   } = useFieldArray({
     control: form.control,
     name: "achievements",
-    shouldUnregister: true,
+    shouldUnregister: false,
   });
 
   const onAddAchievement = () => {
